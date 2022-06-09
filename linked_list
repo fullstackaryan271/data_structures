@@ -1,1 +1,123 @@
 
+package linkedlist;
+
+public class SinglyLinkedList {
+
+	public Node head;
+	public Node tail;
+	public int size;
+	
+	public Node createSinglyLinkedList(int nodeValue) {
+		head = new Node();
+		Node node = new Node();
+		node.next = null;
+		node.data = nodeValue;
+		head = node;
+		tail = node;
+		size = 1;
+		return head;
+	}
+
+//	insert a new data
+	public void insertValue(int nodeData, int location) {
+		Node node = new Node();
+		node.data = nodeData;
+		if(head == null) {
+			createSinglyLinkedList(nodeData);
+			return;
+		}else if(location == 0) {
+			node.next = head;
+			head = node;
+			
+		}else if(location >= size) {
+			node.next = null;
+			tail.next = node;
+			tail = node;
+		}else {
+			Node nodeTemp = head;
+			int i = 0;
+			while(i < location-1) {
+				nodeTemp = nodeTemp.next;
+				i++;
+			}
+			Node nextNode = nodeTemp.next;
+			nodeTemp.next = node;
+			node.next = nextNode;
+		}
+		size ++;
+		
+	}
+//	traversing linked list
+	public void traverseLinkedList() {
+		if(head == null) {
+			System.out.println("sll does not exist");
+		}else {
+			Node tempNode = head;
+			for(int i=0; i<size; i++) {
+				System.out.print(tempNode.data);
+				if(i != size-1) {
+					System.out.print("->");
+				}
+				tempNode = tempNode.next;
+			}
+		}
+		
+	}
+	//searching an element
+	boolean searchLinkedList(int nodeNew) {
+		if(head != null) {
+			Node tempNode = head;
+			for(int i=0; i<size; i++) {
+				if(tempNode.data ==  nodeNew) {
+					System.out.println("found the node"+ i);
+					return true;
+				}
+				tempNode = tempNode.next;
+			}
+		}    
+		System.out.println("not found");
+		return false;
+		
+	}
+//deleting a node from SinglyLinkedList
+	public void deletionOfNode(int location) {
+	if(head == null) {
+		System.out.println("the sll does not exist");
+		return;
+	}else if (location == 0) {
+		head  = head.next;
+		size--;
+		if(size == 0) {
+			tail = null;
+		}
+	}
+	else if (location >= size) {
+		Node nodeTemp = head;
+		for(int i = 0; i<size-1; i++) {
+			nodeTemp = nodeTemp.next;
+		}
+		if(nodeTemp == head) {
+			tail = head = null;
+			size--;
+			return;
+		}
+		nodeTemp.next = null;
+		tail = nodeTemp;
+		size--;
+	}else {
+		Node tempNode = head;
+		for(int i=0; i<location-1; i++) {
+	        tempNode = tempNode.next;
+		}
+		tempNode.next = tempNode.next.next;
+		size--;
+	}
+	}
+	//delete whole singly linked list
+	public void deleteSll() {
+		head = null;
+		tail = null;
+		System.out.println("singly linkde list deleted");
+	}
+}
+		
